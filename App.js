@@ -8,11 +8,14 @@ import {
   Image,
   Animated,
   TouchableWithoutFeedback,
-  TouchableOpacity
+  TouchableOpacity,
+  CameraRoll
 } from "react-native";
 import LoadingIndicator from "./src/components/LoadingIndicator";
 import axios from "axios";
 import Icon from "@expo/vector-icons/Ionicons";
+import { FileSystem } from "expo";
+import { Permissions } from "expo-permissions";
 
 const { height, width } = Dimensions.get("window");
 
@@ -32,6 +35,30 @@ export default class App extends Component {
     images: [],
     scale: new Animated.Value(1),
     isImageFocused: false
+  };
+
+  saveToCameraRoll = async image => {
+    alert("save to camera roll")
+    // let cameraPermissions = await Permissions.getAsync(Permissions.CAMERA_ROLL);
+    // if (cameraPermissions.status !== "granted") {
+    //   cameraPermissions = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    // }
+
+    // if (cameraPermissions.status === "granted") {
+    //   FileSystem.downloadAsync(
+    //     image.urls.regular,
+    //     FileSystem.documentDirecotory + image.id + ".jpg"
+    //   )
+    //     .then(({ uri }) => {
+    //       CameraRoll.saveToCameraRoll(uri);
+    //       alert("saved to photos");
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //     });
+    // } else {
+    //   alert("Requires camera roll permission");
+    // }
   };
 
   loadWallappers = () => {
@@ -97,19 +124,19 @@ export default class App extends Component {
           <View style={styles.drawer}>
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={()=>alert("load images")}
+              onPress={() => this.loadWallappers()}
             >
               <Icon name="ios-refresh" color="white" size={40} />
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={()=>alert("load images")}
+              onPress={() => this.saveToCameraRoll(item)}
             >
               <Icon name="ios-share" color="white" size={40} />
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={()=>alert("load images")}
+              onPress={() => alert("load images")}
             >
               <Icon name="ios-save" color="white" size={40} />
             </TouchableOpacity>
